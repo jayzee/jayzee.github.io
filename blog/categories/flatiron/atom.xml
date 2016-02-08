@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Flatiron | Blogj!]]></title>
   <link href="http://jayzee.github.io/blog/categories/flatiron/atom.xml" rel="self"/>
   <link href="http://jayzee.github.io/"/>
-  <updated>2016-02-08T18:14:14-05:00</updated>
+  <updated>2016-02-08T18:22:42-05:00</updated>
   <id>http://jayzee.github.io/</id>
   <author>
     <name><![CDATA[Josh Zizmor]]></name>
@@ -20,11 +20,11 @@
     <id>http://jayzee.github.io/blog/2016/02/08/my-first-post-on-octopress</id>
     <content type="html"><![CDATA[<p>Before last week I was convinced that at a fundamental level everything could be built of some combination of an if, else and while loop. I ignored higher level enumerators at all cost. As soon as I saw Ruby&rsquo;s inject method I instinctively tried to avoid it. It seemed confusing and unnecessary. Maybe there were some “advanced” coders who used it but I’m sure I could get around ever needing it.</p>
 
-<p>At some point during last week&rsquo;s lab I was prodding into using it and very quickly the learning curve disappeared and its benefits was obvious.<br></p>
+<p>At some point during last week&rsquo;s lab I was prodded into using it and very quickly the learning curve disappeared and it became a go-to tool.<br></p>
 
-<p>Enumerable#inject is a powerful shortcut, it’s a good tool to avoid writing lines of unnecessary code.<br></p>
+<p>Enumerable#inject is a powerful shortcut, it’s makes summing up items simple and compact.<br></p>
 
-<p>For the record the basics of inject can be done with some clunky code:<br></p>
+<p>The basics of inject can be done without .inject but it&rsquo;s really clunky. For example:<br></p>
 
 <pre><code>counter = 5
 sum = 0
@@ -35,7 +35,7 @@ end
 return sum
 </code></pre>
 
-<p>So what is inject? Inject is an iterating device lets you pass it a variable that can then be acted upon by all the items that are iterated through. Think of it like a global variable that stays throughout the laps of iteration. Inject then returns the variable.<br></p>
+<p>Inject is an iterating device lets you pass in a variable that can then be acted upon by all the items that are iterated through. Think of it like a class variable that stays throughout the laps of iteration. Inject then returns the variable which can be the sum of all the laps of iteration.<br></p>
 
 <p>A basic example would work like this:
 ```
@@ -46,7 +46,7 @@ end</p>
 <h1>=> 9</h1>
 
 <pre><code>
-Every item in the range is passed into the inject method. The block is executed one for each element that the inject is called up, in this case the range array with numbers 2,3 and 4. The block will be executed upon 3 times. The first time the variable ‘item’ will be ‘2’, the second ‘3’ and the third ‘4’. In each execution the ‘item’ will be added to the ‘accumulator’ variable. Inject is an easy way to sum up all the items in the array! Think of what else it can do!&lt;br&gt;
+Every item in the range is passed into the inject method. The block is executed one for each element that the inject is called up. In this case the range array has the numbers 2,3 and 4. The block will be executed upon 3 times. The first time the variable ‘item’ will be ‘2’, the second time ‘3’ and the third ‘4’. In each execution the ‘item’ will be added to the ‘accumulator’ variable. Inject is an easy way to sum up all the items in the array! &lt;br&gt;
 
 Inject can also be passed a variable so that your ‘accumulator’ doesn’t need to to start at 0. Take a look at this example. The ‘accumulator’ variable is going to start at 20. This information is set directly to the right of the inject method.&lt;br&gt;
 </code></pre>
