@@ -2,12 +2,12 @@
 #      Main Configs       #
 # ----------------------- #
 
-url: http://yoursite.com
-title: My Octopress Blog
-subtitle: A blogging framework for hackers.
-author: Your Name
+url: http://jayzee.github.io
+title: Blogj!
+subtitle: Things people say when they are learning to code
+author: Josh Zizmor
 simple_search: https://www.google.com/search
-description:
+description: A few thoughts on learning to code.
 
 # Default date format is "ordinal" (resulting in "July 22nd 2007")
 # You can customize the format as defined in
