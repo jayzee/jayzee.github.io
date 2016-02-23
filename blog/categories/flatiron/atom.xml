@@ -4,7 +4,7 @@
   <title><![CDATA[Category: flatiron | Blogj!]]></title>
   <link href="http://jayzee.github.io/blog/categories/flatiron/atom.xml" rel="self"/>
   <link href="http://jayzee.github.io/"/>
-  <updated>2016-02-17T15:47:13-05:00</updated>
+  <updated>2016-02-23T14:03:58-05:00</updated>
   <id>http://jayzee.github.io/</id>
   <author>
     <name><![CDATA[Josh Zizmor]]></name>
@@ -12,6 +12,112 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Group By &amp;&amp; Having == ?]]></title>
+    <link href="http://jayzee.github.io/blog/2016/02/20/group-by-and-and-having-equals-equals/"/>
+    <updated>2016-02-20T21:41:16-05:00</updated>
+    <id>http://jayzee.github.io/blog/2016/02/20/group-by-and-and-having-equals-equals</id>
+    <content type="html"><![CDATA[<p>I wanted to take a few minutes to discuss the GROUP BY function and the HAVING function. I&rsquo;ll try to answer the questions around when should they be used? What do they &lsquo;really&rsquo; do and why should we use them.</p>
+
+<p>But first &hellip; ROTHKO!</p>
+
+<p><img src="https://www.etc.cmu.edu/projects/atl/images/rothko/rothko3.jpg"></p>
+
+<p>Why Rothko? His work highlights the importance of carefully choosing the items that group together. By &ldquo;grouping&rdquo; specific colors  the piece as a whole is stronger than the individual color. Grouping or picking the right items that go together can heighten or take away from a group. 1 + 1 = 3 or 1 + 1 = -2.</p>
+
+<p><img src="https://sprungonfood.files.wordpress.com/2014/08/image_36.jpeg"></p>
+
+<p>Same with food, eating a meal that has flavors that complement each other can bring the plate to the next level (salty and sweet is a killer&hellip; shout out to salted crack caramel ice cream).</p>
+
+<p><strong>1. Group By</strong></p>
+
+<p>What’s up with GROUP BY? Is it as straightforward as it sounds or is there some dark layer hiding underneath that will haunt your SQL statement and return you &lsquo;brie&rsquo; when you were expecting &lsquo;Gouda&rsquo;. SQL acts like its as straight forward as vanilla but we all know there&rsquo;s some chunky monkey hiding beneath the surface.</p>
+
+<p>Basics:</p>
+
+<p>Lots of times we have more than one record for a certain attribute. For example, there could be 25 players on the Yankees  in a league with hundreds of players and I just want to know the best on base percentage for the yankees.</p>
+
+<p>OR what if need to know the total sick days for 5 members of the custodial staff in a company of 150 employees.</p>
+
+<p>OR what if I&rsquo;m trying to see how many current members are in Earth Wind &amp; Fire from a database that has that everyone who has ever played in the group.</p>
+
+<p>GROUP BY is the key to finding out this kind of information</p>
+
+<p>GROUP BY gathers all of the rows together that contain data in the specified column and will allow aggregate functions to happen to one more columns.</p>
+
+<p>Let&rsquo;s say you are in charge of a zoo. Let&rsquo;s call it the Flatiron Zoo for discarded animals. You put together a nice database that looks like this:</p>
+
+<p><img src="sql.png"></p>
+
+<pre><code>Animal      Qty     Favorite Food      Bites?     Type
+Duck          5         PopTarts        No       Mammal
+Kangaroo    10        Granola         Yes        Mammal
+Iguanas    4          Salad           No         Reptile
+Frog      30        licorice      No       Amphibian
+</code></pre>
+
+<p>Let’s say I’d like to see how many Mammals I have at my small zoo. I’d want to have a row just for animal types. That’s where GROUP BY can come in handy. I can SUM the items in my select and only show one row of Animal Type.</p>
+
+<p>Let&rsquo;s say I ran this SQL code:
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>SELECT Animal_Type, SUM(QTY) FROM Animals_in_Zoo
+</span><span class='line'>GROUP BY Animal_Type&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;pre&gt;&lt;code&gt;
+</span><span class='line'>There must be some common missteps that people make, right?
+</span><span class='line'>Let's say you run this SQL statement:
+</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;SELECT * FROM Animals_in_zoo
+</span><span class='line'>GROUP BY type</span></code></pre></td></tr></table></div></figure></p>
+
+<p>You would get a highly dubious table that looks something like this:
+<code>
+Animal      Qty     Favorite Food      Bites?     Animal_Type
+Duck          5         PopTarts        No       Mammal
+Iguanas    4          Salad           No         Reptile
+Frog      30        licorice      No       Amphibian
+</code></p>
+
+<p>It probably wouldn&rsquo;t be much help since it&rsquo;s basically just given us one row for each animal type.</p>
+
+<p>Now More ROTHKO</p>
+
+<p><img src="http://i.huffpost.com/gen/1849091/thumbs/o-MARK-ROTHKO-facebook.jpg"></p>
+
+<p><strong>2. HAVING</strong>
+So what&rsquo;s the deal with using HAVING. I know it replaces WHERE sometimes but what&rsquo;s the rule&hellip; when should I be using it?</p>
+
+<ol>
+<li>Where does not work with aggregates&hellip; For example:
+SELECT animal_type, sum(Qty) from Animals_in_zoo
+GROUP BY animal_type WHERE sum(qty) > 10</li>
+</ol>
+
+
+<p>This does not work. You need a HAVING instead of WHERE
+SELECT animal_type, sum(Qty) from Animals_in_zoo
+GROUP BY animal_type HAVING sum(qty) > 10</p>
+
+<ol>
+<li>One of the SELECT items has an AS after it.</li>
+</ol>
+
+
+<p>SELECT animal_type, animal AS animalize from Animals_in_zoo
+GROUP BY animal_type HAVING animalize = &lsquo;Duck&rsquo;</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[An Injection of Ruby]]></title>

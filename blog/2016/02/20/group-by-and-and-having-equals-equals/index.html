@@ -3,7 +3,7 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>Blogj!</title>
+	<title>Group By &amp;&amp; Having == ? - Blogj!</title>
 	<meta name="author" content="Josh Zizmor">
 
 	
@@ -73,18 +73,9 @@
 	
 		
 	
-	<div id="content" class="inner">
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/2016/02/20/group-by-and-and-having-equals-equals/">
-		
-			Group by &amp;&amp; Having == ?</a>
-	</h2>
-	<div class="entry-content">
-		<p>I wanted to take a few minutes to discuss the GROUP BY function and the HAVING function. I&rsquo;ll try to answer the questions around when should they be used? What do they &lsquo;really&rsquo; do and why should we use them.</p>
+	<div id="content" class="inner"><article class="post">
+	<h2 class="title">Group by &amp;&amp; Having == ?</h2>
+	<div class="entry-content"><p>I wanted to take a few minutes to discuss the GROUP BY function and the HAVING function. I&rsquo;ll try to answer the questions around when should they be used? What do they &lsquo;really&rsquo; do and why should we use them.</p>
 
 <p>But first &hellip; ROTHKO!</p>
 
@@ -188,10 +179,7 @@ GROUP BY animal_type HAVING sum(qty) > 10</p>
 
 <p>SELECT animal_type, animal AS animalize from Animals_in_zoo
 GROUP BY animal_type HAVING animalize = &lsquo;Duck&rsquo;</p>
-
-		
-		
-	</div>
+</div>
 
 
 <div class="meta">
@@ -212,99 +200,19 @@ Feb 20th, 2016</div>
 </div>
 </article>
 
-
-    <article class="post">
-	<h2 class="title">
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
 		
-		<a href="/blog/2016/02/08/my-first-post-on-octopress/">
 		
-			An Injection of Ruby</a>
-	</h2>
-	<div class="entry-content">
-		<p>Before last week I was convinced that at a fundamental level everything could be built of some combination of an if, else and while loop. I ignored higher level enumerators at all cost. As soon as I saw Ruby&rsquo;s inject method I instinctively tried to avoid it. It seemed confusing and unnecessary. Maybe there were some “advanced” coders who used it but I’m sure I could get around ever needing it.</p>
-
-<p>At some point during last week&rsquo;s lab I was prodded into using it and very quickly the learning curve disappeared and it became a go-to tool.<br></p>
-
-<p>Enumerable#inject is a powerful shortcut, it’s makes summing up items simple and compact.<br></p>
-
-<p>The basics of inject can be done without .inject but it&rsquo;s really clunky. For example:<br></p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>counter = 5
-</span><span class='line'>sum = 0
-</span><span class='line'>while counter &lt;= 10
-</span><span class='line'>  sum += 5
-</span><span class='line'>  counter += 1
-</span><span class='line'>end
-</span><span class='line'>return sum</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Inject is an iterating device lets you pass in a variable that can then be acted upon by all the items that are iterated through. Think of it like a class variable that stays throughout the laps of iteration. Inject then returns the variable which can be the sum of all the laps of iteration.<br></p>
-
-<p>A basic example would work like this:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>[2,3,4].inject() do | accumulator, item|
-</span><span class='line'>  accumulator += item
-</span><span class='line'>end
-</span><span class='line'>#=&gt; 9</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Every item in the range is passed into the inject method. The block is executed one for each element that the inject is called up. In this case the range array has the numbers 2,3 and 4. The block will be executed upon 3 times. The first time the variable ‘item’ will be ‘2’, the second time ‘3’ and the third ‘4’. In each execution the ‘item’ will be added to the ‘accumulator’ variable. Inject is an easy way to sum up all the items in the array! <br></p>
-
-<p>Inject can also be passed a variable so that your ‘accumulator’ doesn’t need to to start at 0. Take a look at this example. <br></p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>[2,3,4].inject(20) do | accumulator, item|
-</span><span class='line'>  accumulator += item
-</span><span class='line'>end
-</span><span class='line'>#=&gt; 29</span></code></pre></td></tr></table></div></figure>
-
-
-<p>The ‘accumulator’ variable is going to start at 20. This information is set directly to the right of the inject method.<br></p>
-
-<p>Inject is now my go to code of choice when summing up items is needed.</p>
-
+		<a class="addthis_button_tweet"></a>
+		
 		
 		
 	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-Feb 8th, 2016</div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/flatiron/'>flatiron</a>, <a class='category' href='/blog/categories/school/'>school</a>
-
-
-</div>
 	
 </div>
-</article>
 
-<nav id="pagenavi">
-    
-    
-    <div class="center"><a href="/blog/archives">Blog Archives</a></div>
-</nav>
+
 </div>
 	<footer id="footer" class="inner">Copyright &copy; 2016
 
