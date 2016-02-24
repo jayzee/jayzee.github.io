@@ -7,7 +7,7 @@
 	<meta name="author" content="Josh Zizmor">
 
 	
-	<meta name="description" content="I wanted to take a few minutes to discuss the GROUP BY function and the HAVING function. I&rsquo;ll try to answer the questions around when should &hellip;">
+	<meta name="description" content="Let&rsquo;s talk about the GROUP BY and HAVING statements and how to best use them in SQL. But first &hellip; ROTHKO! Why Rothko? His work highlights &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -75,110 +75,96 @@
 	
 	<div id="content" class="inner"><article class="post">
 	<h2 class="title">Group by &amp;&amp; Having == ?</h2>
-	<div class="entry-content"><p>I wanted to take a few minutes to discuss the GROUP BY function and the HAVING function. I&rsquo;ll try to answer the questions around when should they be used? What do they &lsquo;really&rsquo; do and why should we use them.</p>
+	<div class="entry-content"><p>Let&rsquo;s talk about the GROUP BY and HAVING statements and how to best use them in SQL.</p>
 
 <p>But first &hellip; ROTHKO!</p>
 
 <p><img src="https://www.etc.cmu.edu/projects/atl/images/rothko/rothko3.jpg"></p>
 
-<p>Why Rothko? His work highlights the importance of carefully choosing the items that group together. By &ldquo;grouping&rdquo; specific colors  the piece as a whole is stronger than the individual color. Grouping or picking the right items that go together can heighten or take away from a group. 1 + 1 = 3 or 1 + 1 = -2.</p>
-
-<p><img src="https://sprungonfood.files.wordpress.com/2014/08/image_36.jpeg"></p>
+<p>Why Rothko? His work highlights the importance of carefully choosing the items that group together. By &ldquo;grouping&rdquo; specific colors  the piece as a whole is stronger than the individual color. Grouping or picking the right items that go together can heighten or take away from a group. 1 + 1 = 3 or 1 + 1 = -2.
+<br ><br >
+<strong>Further Proof on the importance of correctly grouping items</strong></p>
 
 <p>Same with food, eating a meal that has flavors that complement each other can bring the plate to the next level (salty and sweet is a killer&hellip; shout out to salted crack caramel ice cream).</p>
 
+<p><img src="https://sprungonfood.files.wordpress.com/2014/08/image_36.jpeg"></p>
+
 <p><strong>1. Group By</strong></p>
 
-<p>What’s up with GROUP BY? Is it as straightforward as it sounds or is there some dark layer hiding underneath that will haunt your SQL statement and return you &lsquo;brie&rsquo; when you were expecting &lsquo;Gouda&rsquo;. SQL acts like its as straight forward as vanilla but we all know there&rsquo;s some chunky monkey hiding beneath the surface.</p>
+<p>What’s up with GROUP BY? Is it as straightforward as it sounds or is there some dark layer hiding underneath that will haunt your SQL statement and return you &lsquo;american cheese&rsquo; when you were expecting &lsquo;Gouda&rsquo;. SQL acts like it&rsquo;s as straight forward as vanilla but there&rsquo;s got to be some chunky monkey hiding beneath the surface. (No more food jokes, I promise.)</p>
 
-<p>Basics:</p>
+<p><strong>Group By - Basics:</strong></p>
 
-<p>Lots of times we have more than one record for a certain attribute. For example, there could be 25 players on the Yankees  in a league with hundreds of players and I just want to know the best on base percentage for the yankees.</p>
+<p>Lots of times we have more than one record for a certain attribute. For example, there could be 25 players on the Yankees  in a league with hundreds of players. What if I just want to know how many home runs the Yankees' hit?</p>
 
-<p>OR what if need to know the total sick days for 5 members of the custodial staff in a company of 150 employees.</p>
+<p>OR what if need to know the total sick days for 5 members of the custodial staff in a company of 100 employees?</p>
 
-<p>OR what if I&rsquo;m trying to see how many current members are in Earth Wind &amp; Fire from a database that has that everyone who has ever played in the group.</p>
+<p>OR what if I&rsquo;m trying to see the average age of the current members of Parliament Funkadelic and my database has info on everyone who has ever played in the group?</p>
 
-<p>GROUP BY is the key to finding out this kind of information</p>
+<p>GROUP BY is the key to finding out this kind of critical information in a SQL database.</p>
 
-<p>GROUP BY gathers all of the rows together that contain data in the specified column and will allow aggregate functions to happen to one more columns.</p>
+<p>GROUP BY gathers all of the rows together that contain data in the specified column and will allow aggregate functions to happen to one or more columns.</p>
 
-<p>Let&rsquo;s say you are in charge of a zoo. Let&rsquo;s call it the Flatiron Zoo for discarded animals. You put together a nice database that looks like this:</p>
+<p>Let&rsquo;s say you are in charge of a zoo. Let&rsquo;s call it the <i>Flatiron Zoo for Discarded Animals</i>. To keep better records you put together a nice SQL database that looks like this:</p>
 
-<p><img src="sql.png"></p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>Animal   Qty     Favorite Food      Bites?     Type
-</span><span class='line'>Duck        5         PopTarts        No       Mammal
-</span><span class='line'>Kangaroo  10        Granola         Yes        Mammal
-</span><span class='line'>Iguanas      4          Salad           No         Reptile
-</span><span class='line'>Frog      30        licorice      No       Amphibian
-</span></code></pre></td></tr></table></div></figure>
-
+<p><img src="http://www.joshzizmor.com/fi/sql.png"></p>
 
 <p>Let’s say I’d like to see how many Mammals I have at my small zoo. I’d want to have a row just for animal types. That’s where GROUP BY can come in handy. I can SUM the items in my select and only show one row of Animal Type.</p>
 
-<p>Let&rsquo;s say I ran this SQL code:</p>
+<p>I&rsquo;d execute this SELECT to see how many of each animal type there is.</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>SELECT Animal_Type, SUM(QTY) FROM Animals_in_Zoo
-</span><span class='line'>GROUP BY Animal_Type
+</pre></td><td class='code'><pre><code class=''><span class='line'>SELECT type, SUM(QTY) FROM animals
+</span><span class='line'>GROUP BY type
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>There must be some common missteps that people make, right?
-Let&rsquo;s say you run this SQL statement:</p>
+<p><img src="http://www.joshzizmor.com/fi/sql2.png"></p>
+
+<p><strong>Be Aware, be very aware:</strong></p>
+
+<p>There must be some common missteps that people make, right?</p>
+
+<p>Let&rsquo;s say you run this SQL statement:</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>SELECT * FROM Animals_in_zoo
-</span><span class='line'>GROUP BY type</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class=''><span class='line'>SELECT * FROM animals
+</span><span class='line'>GROUP BY type
+</span></code></pre></td></tr></table></div></figure>
 
 
-<p>You would get a highly dubious table that looks something like this:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>Animal   Qty     Favorite Food      Bites?     Animal_Type
-</span><span class='line'>Duck        5         PopTarts        No       Mammal
-</span><span class='line'>Iguanas      4          Salad           No         Reptile
-</span><span class='line'>Frog      30        licorice      No       Amphibian</span></code></pre></td></tr></table></div></figure>
-
+<p>You would get a highly dubious table that looks something like this:<br>
+<img src="http://www.joshzizmor.com/fi/sql3.png"></p>
 
 <p>It probably wouldn&rsquo;t be much help since it&rsquo;s basically just given us one row for each animal type.</p>
 
+<p><br>
+<strong>2. HAVING</strong><br></p>
+
+<p>So what&rsquo;s the deal with using HAVING? I know it replaces WHERE sometimes but what&rsquo;s the rule&hellip; when should I be using it?</p>
+
+<ol><li><strong>RULE #1:</strong> WHERE does not work with aggregates. For example:
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>SELECT animal_type, sum(Qty) from Animals_in_zoo
+</span><span class='line'>GROUP BY animal_type WHERE sum(qty) &gt; 10</span></code></pre></td></tr></table></div></figure>
+This does not work. You need a HAVING instead of WHERE if there's an aggregate involved. It should look like this:
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>SELECT animal_type, sum(Qty) from Animals_in_zoo
+</span><span class='line'>GROUP BY animal_type HAVING sum(qty) &gt; 10&lt;/li&gt;</span></code></pre></td></tr></table></div></figure>
+
+<li><strong>RULE #2: </strong>One of the SELECT items has an AS after it.
+
+SELECT animal_type, animal AS animalize from Animals_in_zoo
+GROUP BY animal_type HAVING animalize = 'Duck'</li></ol>
+
+
 <p>Now More ROTHKO</p>
 
-<p><img src="http://i.huffpost.com/gen/1849091/thumbs/o-MARK-ROTHKO-facebook.jpg"></p>
-
-<p><strong>2. HAVING</strong>
-So what&rsquo;s the deal with using HAVING. I know it replaces WHERE sometimes but what&rsquo;s the rule&hellip; when should I be using it?</p>
-
-<ol>
-<li>Where does not work with aggregates&hellip; For example:
-SELECT animal_type, sum(Qty) from Animals_in_zoo
-GROUP BY animal_type WHERE sum(qty) > 10</li>
-</ol>
-
-
-<p>This does not work. You need a HAVING instead of WHERE
-SELECT animal_type, sum(Qty) from Animals_in_zoo
-GROUP BY animal_type HAVING sum(qty) > 10</p>
-
-<ol>
-<li>One of the SELECT items has an AS after it.</li>
-</ol>
-
-
-<p>SELECT animal_type, animal AS animalize from Animals_in_zoo
-GROUP BY animal_type HAVING animalize = &lsquo;Duck&rsquo;</p>
+<p><img src="https://upload.wikimedia.org/wikipedia/en/5/5f/No_61_Mark_Rothko.jpg" ></p>
 </div>
 
 

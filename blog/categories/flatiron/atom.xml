@@ -4,7 +4,7 @@
   <title><![CDATA[Category: flatiron | Blogj!]]></title>
   <link href="http://jayzee.github.io/blog/categories/flatiron/atom.xml" rel="self"/>
   <link href="http://jayzee.github.io/"/>
-  <updated>2016-02-23T14:03:58-05:00</updated>
+  <updated>2016-02-23T21:30:23-05:00</updated>
   <id>http://jayzee.github.io/</id>
   <author>
     <name><![CDATA[Josh Zizmor]]></name>
@@ -18,48 +18,43 @@
     <link href="http://jayzee.github.io/blog/2016/02/20/group-by-and-and-having-equals-equals/"/>
     <updated>2016-02-20T21:41:16-05:00</updated>
     <id>http://jayzee.github.io/blog/2016/02/20/group-by-and-and-having-equals-equals</id>
-    <content type="html"><![CDATA[<p>I wanted to take a few minutes to discuss the GROUP BY function and the HAVING function. I&rsquo;ll try to answer the questions around when should they be used? What do they &lsquo;really&rsquo; do and why should we use them.</p>
+    <content type="html"><![CDATA[<p>Let&rsquo;s talk about the GROUP BY and HAVING statements and how to best use them in SQL.</p>
 
 <p>But first &hellip; ROTHKO!</p>
 
 <p><img src="https://www.etc.cmu.edu/projects/atl/images/rothko/rothko3.jpg"></p>
 
-<p>Why Rothko? His work highlights the importance of carefully choosing the items that group together. By &ldquo;grouping&rdquo; specific colors  the piece as a whole is stronger than the individual color. Grouping or picking the right items that go together can heighten or take away from a group. 1 + 1 = 3 or 1 + 1 = -2.</p>
-
-<p><img src="https://sprungonfood.files.wordpress.com/2014/08/image_36.jpeg"></p>
+<p>Why Rothko? His work highlights the importance of carefully choosing the items that group together. By &ldquo;grouping&rdquo; specific colors  the piece as a whole is stronger than the individual color. Grouping or picking the right items that go together can heighten or take away from a group. 1 + 1 = 3 or 1 + 1 = -2.
+<br ><br >
+<strong>Further Proof on the importance of correctly grouping items</strong></p>
 
 <p>Same with food, eating a meal that has flavors that complement each other can bring the plate to the next level (salty and sweet is a killer&hellip; shout out to salted crack caramel ice cream).</p>
 
+<p><img src="https://sprungonfood.files.wordpress.com/2014/08/image_36.jpeg"></p>
+
 <p><strong>1. Group By</strong></p>
 
-<p>What’s up with GROUP BY? Is it as straightforward as it sounds or is there some dark layer hiding underneath that will haunt your SQL statement and return you &lsquo;brie&rsquo; when you were expecting &lsquo;Gouda&rsquo;. SQL acts like its as straight forward as vanilla but we all know there&rsquo;s some chunky monkey hiding beneath the surface.</p>
+<p>What’s up with GROUP BY? Is it as straightforward as it sounds or is there some dark layer hiding underneath that will haunt your SQL statement and return you &lsquo;american cheese&rsquo; when you were expecting &lsquo;Gouda&rsquo;. SQL acts like it&rsquo;s as straight forward as vanilla but there&rsquo;s got to be some chunky monkey hiding beneath the surface. (No more food jokes, I promise.)</p>
 
-<p>Basics:</p>
+<p><strong>Group By - Basics:</strong></p>
 
-<p>Lots of times we have more than one record for a certain attribute. For example, there could be 25 players on the Yankees  in a league with hundreds of players and I just want to know the best on base percentage for the yankees.</p>
+<p>Lots of times we have more than one record for a certain attribute. For example, there could be 25 players on the Yankees  in a league with hundreds of players. What if I just want to know how many home runs the Yankees' hit?</p>
 
-<p>OR what if need to know the total sick days for 5 members of the custodial staff in a company of 150 employees.</p>
+<p>OR what if need to know the total sick days for 5 members of the custodial staff in a company of 100 employees?</p>
 
-<p>OR what if I&rsquo;m trying to see how many current members are in Earth Wind &amp; Fire from a database that has that everyone who has ever played in the group.</p>
+<p>OR what if I&rsquo;m trying to see the average age of the current members of Parliament Funkadelic and my database has info on everyone who has ever played in the group?</p>
 
-<p>GROUP BY is the key to finding out this kind of information</p>
+<p>GROUP BY is the key to finding out this kind of critical information in a SQL database.</p>
 
-<p>GROUP BY gathers all of the rows together that contain data in the specified column and will allow aggregate functions to happen to one more columns.</p>
+<p>GROUP BY gathers all of the rows together that contain data in the specified column and will allow aggregate functions to happen to one or more columns.</p>
 
-<p>Let&rsquo;s say you are in charge of a zoo. Let&rsquo;s call it the Flatiron Zoo for discarded animals. You put together a nice database that looks like this:</p>
+<p>Let&rsquo;s say you are in charge of a zoo. Let&rsquo;s call it the <i>Flatiron Zoo for Discarded Animals</i>. To keep better records you put together a nice SQL database that looks like this:</p>
 
-<p><img src="sql.png"></p>
-
-<pre><code>Animal      Qty     Favorite Food      Bites?     Type
-Duck          5         PopTarts        No       Mammal
-Kangaroo    10        Granola         Yes        Mammal
-Iguanas    4          Salad           No         Reptile
-Frog      30        licorice      No       Amphibian
-</code></pre>
+<p><img src="http://www.joshzizmor.com/fi/sql.png"></p>
 
 <p>Let’s say I’d like to see how many Mammals I have at my small zoo. I’d want to have a row just for animal types. That’s where GROUP BY can come in handy. I can SUM the items in my select and only show one row of Animal Type.</p>
 
-<p>Let&rsquo;s say I ran this SQL code:
+<p>I&rsquo;d execute this SELECT to see how many of each animal type there is.
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
@@ -70,81 +65,134 @@ Frog      30        licorice      No       Amphibian
 <span class='line-number'>8</span>
 <span class='line-number'>9</span>
 <span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>SELECT Animal_Type, SUM(QTY) FROM Animals_in_Zoo
-</span><span class='line'>GROUP BY Animal_Type&lt;/p&gt;
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>SELECT type, SUM(QTY) FROM animals
+</span><span class='line'>GROUP BY type&lt;/p&gt;
 </span><span class='line'>
-</span><span class='line'>&lt;pre&gt;&lt;code&gt;
+</span><span class='line'>&lt;pre&gt;&lt;code&gt;&lt;img src="http://www.joshzizmor.com/fi/sql2.png"&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;strong&gt;Be Aware, be very aware:&lt;/strong&gt;
+</span><span class='line'>
 </span><span class='line'>There must be some common missteps that people make, right?
+</span><span class='line'>
 </span><span class='line'>Let's say you run this SQL statement:
 </span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
 </span><span class='line'>
-</span><span class='line'>&lt;p&gt;SELECT * FROM Animals_in_zoo
-</span><span class='line'>GROUP BY type</span></code></pre></td></tr></table></div></figure></p>
-
-<p>You would get a highly dubious table that looks something like this:
-<code>
-Animal      Qty     Favorite Food      Bites?     Animal_Type
-Duck          5         PopTarts        No       Mammal
-Iguanas    4          Salad           No         Reptile
-Frog      30        licorice      No       Amphibian
-</code></p>
-
-<p>It probably wouldn&rsquo;t be much help since it&rsquo;s basically just given us one row for each animal type.</p>
-
-<p>Now More ROTHKO</p>
-
-<p><img src="http://i.huffpost.com/gen/1849091/thumbs/o-MARK-ROTHKO-facebook.jpg"></p>
-
-<p><strong>2. HAVING</strong>
-So what&rsquo;s the deal with using HAVING. I know it replaces WHERE sometimes but what&rsquo;s the rule&hellip; when should I be using it?</p>
-
-<ol>
-<li>Where does not work with aggregates&hellip; For example:
+</span><span class='line'>&lt;p&gt;SELECT * FROM animals
+</span><span class='line'>GROUP BY type&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;```&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;You would get a highly dubious table that looks something like this:&lt;br&gt;
+</span><span class='line'>&lt;img src="http://www.joshzizmor.com/fi/sql3.png"&gt;&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;It probably wouldn&rsquo;t be much help since it&rsquo;s basically just given us one row for each animal type.&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;&lt;br&gt;
+</span><span class='line'>&lt;strong&gt;2. HAVING&lt;/strong&gt;&lt;br&gt;&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;So what&rsquo;s the deal with using HAVING? I know it replaces WHERE sometimes but what&rsquo;s the rule&hellip; when should I be using it?&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;ol&gt;&lt;li&gt;&lt;strong&gt;RULE #1:&lt;/strong&gt; WHERE does not work with aggregates. For example:</span></code></pre></td></tr></table></div></figure>
 SELECT animal_type, sum(Qty) from Animals_in_zoo
-GROUP BY animal_type WHERE sum(qty) > 10</li>
-</ol>
-
-
-<p>This does not work. You need a HAVING instead of WHERE
+GROUP BY animal_type WHERE sum(qty) > 10
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>This does not work. You need a HAVING instead of WHERE if there's an aggregate involved. It should look like this:</span></code></pre></td></tr></table></div></figure>
 SELECT animal_type, sum(Qty) from Animals_in_zoo
-GROUP BY animal_type HAVING sum(qty) > 10</p>
-
-<ol>
-<li>One of the SELECT items has an AS after it.</li>
-</ol>
-
-
-<p>SELECT animal_type, animal AS animalize from Animals_in_zoo
-GROUP BY animal_type HAVING animalize = &lsquo;Duck&rsquo;</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[An Injection of Ruby]]></title>
-    <link href="http://jayzee.github.io/blog/2016/02/08/my-first-post-on-octopress/"/>
-    <updated>2016-02-08T18:11:03-05:00</updated>
-    <id>http://jayzee.github.io/blog/2016/02/08/my-first-post-on-octopress</id>
-    <content type="html"><![CDATA[<p>Before last week I was convinced that at a fundamental level everything could be built of some combination of an if, else and while loop. I ignored higher level enumerators at all cost. As soon as I saw Ruby&rsquo;s inject method I instinctively tried to avoid it. It seemed confusing and unnecessary. Maybe there were some “advanced” coders who used it but I’m sure I could get around ever needing it.</p>
-
-<p>At some point during last week&rsquo;s lab I was prodded into using it and very quickly the learning curve disappeared and it became a go-to tool.<br></p>
-
-<p>Enumerable#inject is a powerful shortcut, it’s makes summing up items simple and compact.<br></p>
-
-<p>The basics of inject can be done without .inject but it&rsquo;s really clunky. For example:<br></p>
-
-<pre><code>counter = 5
-sum = 0
-while counter &lt;= 10
-  sum += 5
-  counter += 1
-end
-return sum
-</code></pre>
-
-<p>Inject is an iterating device lets you pass in a variable that can then be acted upon by all the items that are iterated through. Think of it like a class variable that stays throughout the laps of iteration. Inject then returns the variable which can be the sum of all the laps of iteration.<br></p>
-
-<p>A basic example would work like this:
-```
+GROUP BY animal_type HAVING sum(qty) > 10</li>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>
+</span><span class='line'>&lt;li&gt;&lt;strong&gt;RULE #2: &lt;/strong&gt;One of the SELECT items has an AS after it.
+</span><span class='line'>
+</span><span class='line'>SELECT animal_type, animal AS animalize from Animals_in_zoo
+</span><span class='line'>GROUP BY animal_type HAVING animalize = 'Duck'&lt;/li&gt;&lt;/ol&gt;
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;Now More ROTHKO&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;&lt;img src="https://upload.wikimedia.org/wikipedia/en/5/5f/No_61_Mark_Rothko.jpg" &gt;&lt;/p&gt;
+</span><span class='line'>]]&gt;&lt;/content&gt;
+</span><span class='line'>  &lt;/entry&gt;
+</span><span class='line'>  
+</span><span class='line'>  &lt;entry&gt;
+</span><span class='line'>    &lt;title type="html"&gt;&lt;![CDATA[An Injection of Ruby]]&gt;&lt;/title&gt;
+</span><span class='line'>    &lt;link href="http://jayzee.github.io/blog/2016/02/08/my-first-post-on-octopress/"/&gt;
+</span><span class='line'>    &lt;updated&gt;2016-02-08T18:11:03-05:00&lt;/updated&gt;
+</span><span class='line'>    &lt;id&gt;http://jayzee.github.io/blog/2016/02/08/my-first-post-on-octopress&lt;/id&gt;
+</span><span class='line'>    &lt;content type="html"&gt;&lt;![CDATA[&lt;p&gt;Before last week I was convinced that at a fundamental level everything could be built of some combination of an if, else and while loop. I ignored higher level enumerators at all cost. As soon as I saw Ruby&rsquo;s inject method I instinctively tried to avoid it. It seemed confusing and unnecessary. Maybe there were some “advanced” coders who used it but I’m sure I could get around ever needing it.&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;At some point during last week&rsquo;s lab I was prodded into using it and very quickly the learning curve disappeared and it became a go-to tool.&lt;br&gt;&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;Enumerable#inject is a powerful shortcut, it’s makes summing up items simple and compact.&lt;br&gt;&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;The basics of inject can be done without .inject but it&rsquo;s really clunky. For example:&lt;br&gt;&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;pre&gt;&lt;code&gt;counter = 5
+</span><span class='line'>sum = 0
+</span><span class='line'>while counter &lt;= 10
+</span><span class='line'>  sum += 5
+</span><span class='line'>  counter += 1
+</span><span class='line'>end
+</span><span class='line'>return sum
+</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;Inject is an iterating device lets you pass in a variable that can then be acted upon by all the items that are iterated through. Think of it like a class variable that stays throughout the laps of iteration. Inject then returns the variable which can be the sum of all the laps of iteration.&lt;br&gt;&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;A basic example would work like this:</span></code></pre></td></tr></table></div></figure>
 [2,3,4].inject() do | accumulator, item|
   accumulator += item
 end</p>
