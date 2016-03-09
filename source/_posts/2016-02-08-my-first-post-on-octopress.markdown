@@ -38,7 +38,7 @@ end
 
 Every item in the range is passed into the inject method. The block is executed one for each element that the inject is called up. In this case the range array has the numbers 2,3 and 4. The block will be executed upon 3 times. The first time the variable ‘item’ will be ‘2’, the second time ‘3’ and the third ‘4’. In each execution the ‘item’ will be added to the ‘accumulator’ variable. Inject is an easy way to sum up all the items in the array! <br>
 
-Inject can also be passed a variable so that your ‘accumulator’ doesn’t need to to start at 0. Take a look at this example. The ‘accumulator’ variable is going to start at 20. This information is set directly to the right of the inject method.<br>
+Inject can also be passed a variable so that your ‘accumulator’ doesn’t need to to start at 0. Take a look at this example. <br>
 
 
 ```
@@ -47,3 +47,8 @@ Inject can also be passed a variable so that your ‘accumulator’ doesn’t ne
 end
 #=> 29
 ```
+
+The ‘accumulator’ variable is going to start at 20. This information is set directly to the right of the inject method.<br>
+
+Inject is now my go to code of choice when summing up items is needed.
+
