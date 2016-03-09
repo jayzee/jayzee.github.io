@@ -4,7 +4,7 @@
   <title><![CDATA[Blogj!]]></title>
   <link href="http://jayzee.github.io/atom.xml" rel="self"/>
   <link href="http://jayzee.github.io/"/>
-  <updated>2016-03-09T09:40:04-05:00</updated>
+  <updated>2016-03-09T09:51:35-05:00</updated>
   <id>http://jayzee.github.io/</id>
   <author>
     <name><![CDATA[Josh Zizmor]]></name>
@@ -55,6 +55,20 @@ The protect_from_forgery method! <i>Protect_from_forgery</i> is included by defa
 </pre></td><td class='code'><pre><code class=''><span class='line'>def self.friendly_token
 </span><span class='line'>  SecureRandom.base64(15).tr('+/=lIO0', 'pqrsxyz')
 </span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>::base64 generates a random base64 string. That means there are 64 characters that are available to appear in each spot of the string. The number 15 sets the length of the random string as 15 characters long. Tr works kind of like gsub except its looking for characters instead of strings. Here&rsquo;s an example:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>'abcde'.tr('bda', '123')
+</span><span class='line'>#=&gt; "31c2e"
+</span><span class='line'>
+</span><span class='line'>'abcde'.tr('bcd', '123')
+</span><span class='line'>#=&gt; "a123e"</span></code></pre></td></tr></table></div></figure>
 
 
 <p>The authentication_token is only applied to POST, PATCH and DELETE requests. GET requests do not have tokens since they don&rsquo;t create, alter or destroy&hellip;. unlike our future robot masters!</p>
