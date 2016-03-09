@@ -36,8 +36,23 @@ Every time the server has an action it generates and sends  a new token as part 
 
 This long string of numbers is secretly added as a hidden input field (aka authenticity_token) to every form.
 
+And if you want to devise your own random token here's the code that Rails uses. It's located in lib/devise.rb
+```
+def self.friendly_token
+  SecureRandom.base64(15).tr('+/=lIO0', 'pqrsxyz')
+end
+```
 
+::base64 generates a random base64 string. That means there are 64 characters that are available to appear in each spot of the string. The number 15 sets the length of the random string as 15 characters long. Tr works kind of like gsub except its looking for characters instead of strings. Here's an example:
 
-GET requests do not have tokens since they don't create, alter or destroy.... just like our future robot masters!
+```
+'abcde'.tr('bda', '123')
+#=> "31c2e"
+
+'abcde'.tr('bcd', '123')
+#=> "a123e"
+```
+
+The authentication_token is only applied to POST, PATCH and DELETE requests. GET requests do not have tokens since they don't create, alter or destroy.... unlike our future robot masters!
 
 <img src="https://static.perrotin.com/vue/photo/9471_1.jpg?=20150729121805">
