@@ -1,0 +1,156 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Authentication Token and the Coming Robot Invasion - Blogj!</title>
+	<meta name="author" content="Josh Zizmor">
+
+	
+	<meta name="description" content="What the hell is this? I mean for WTF? Rails is just generating a long string of letters and numbers and nobodies wondering what is going on?!? Are &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="Blogj!" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script async="true" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">Blogj!</a></h1>
+<nav id="main-nav"><ul class="main">
+	<li><a href="/">Blog</a></li>
+	<li><a href="/blog/archives">Archives</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main">
+	<li><a href="/">Blog</a></li>
+	<li><a href="/blog/archives">Archives</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="https://www.google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:jayzee.github.io">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		
+    
+		
+		
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+    
+	</div>
+	<form class="search" action="https://www.google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:jayzee.github.io">
+	</form>
+</nav>
+
+</header>
+	
+		
+	
+	<div id="content" class="inner"><article class="post">
+	<h2 class="title">Authentication Token and the Coming Robot Invasion</h2>
+	<div class="entry-content"><p>What the hell is this?</p>
+
+<p><img src="http://www.joshzizmor.com/fi/authentication_token.png"></p>
+
+<p>I mean for WTF? Rails is just generating a long string of letters and numbers and nobodies wondering what  is going on?!? Are we being tracked? Are we being monitored by an alien race living on the dark side of the moon? How many more days until skynet? Is it a doomsday clock!?! Or is it just the government tracking everything we do?</p>
+
+<p><img src="http://static.comicvine.com/uploads/original/10/106298/3763872-7663450062-indep.jpg" ></p>
+
+<p>Turns out this often misunderstood automatically generated piece of code is protecting us from <strong>cross site request forgery</strong>, a term that does not roll off the tongue, so just call it CSRF.</p>
+
+<p><strong>That doesn&rsquo;t clear anything up. What is CSRF?</strong><br></p>
+
+<p>CSRF is a vulnerability that arises from the way that applications trust a sessions identification cookie. During a CSRF attack, the attacker tricks a separate web application into executing actions. It can potentially trick the victim into submitting malicious actions. CSRF attacks cannot retrieve data but can change states.</p>
+
+<p>Here&rsquo;s an example, let&rsquo;s say you are using a web site called, &lsquo;ForgotTofeedMyCat.com.&rsquo; (FTFMYC) Meanwhile you have another browser tab open to &lsquo;FishFoodFast.com&rsquo;. You click on a picture of fish on FishFoodFast.com that has malicious code. This code utilizes that fact that you are logged into ForgotToFeedmyCat.com and sends a request to ForgotToFeedmyCat.com asking to delete your account including your 1,000,000 rewards points that you have spent years earning.</p>
+
+<p>Luckily Rails 4 and above automatically protects you from the dreaded CSRF attack! Rails 3 has a cookie based solution which can still be attacked so upgrade to Rails 4 immediately.</p>
+
+<p><img src="https://top50sf.files.wordpress.com/2011/08/mars-attacks-opener.jpg"></p>
+
+<p>So how does Rails 4 and above do this magic?
+<i>protect_from_forgery</i> is included by default in the application_controller.rb  when generating new applications.</p>
+
+<p>Rails leverages cryptographically random tokens. It places one in the hidden field, this is what we see, and it also places one in the user&rsquo;s session. Rails adds a hidden input field aka authenticity_token to every form. The token is sent along with the form submission to the application. The server compares the values that was attached to the form with the value that is associated with the user&rsquo;s session. If these don&rsquo;t match then the form is not accepted and the computer could burst into flames. For every server action a new token is generated and sent as part of the response that you receive, if this doesn&rsquo;t match the last one the server sent to you, your request gets aborted.</p>
+
+<p>GET requests do not have tokens since they don&rsquo;t create, alter or destroy&hellip;. just like our future robot masters!</p>
+
+<p><img src="https://static.perrotin.com/vue/photo/9471_1.jpg?=20150729121805"></p>
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+Mar 7th, 2016</div>
+	<div class="tags">
+
+</div>
+	
+</div>
+</article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+		
+		
+		<a class="addthis_button_tweet"></a>
+		
+		
+		
+	</div>
+	
+</div>
+
+
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2016
+
+    Josh Zizmor
+
+</footer>
+	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+
+
+
+
+</body>
+</html>
