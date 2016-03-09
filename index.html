@@ -113,7 +113,17 @@ The protect_from_forgery method! <i>Protect_from_forgery</i> is included by defa
 
 <p>This long string of numbers is secretly added as a hidden input field (aka authenticity_token) to every form.</p>
 
-<p>GET requests do not have tokens since they don&rsquo;t create, alter or destroy&hellip;. just like our future robot masters!</p>
+<p>And if you want to devise your own random token here&rsquo;s the code that Rails uses. It&rsquo;s located in lib/devise.rb</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>def self.friendly_token
+</span><span class='line'>  SecureRandom.base64(15).tr('+/=lIO0', 'pqrsxyz')
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The authentication_token is only applied to POST, PATCH and DELETE requests. GET requests do not have tokens since they don&rsquo;t create, alter or destroy&hellip;. unlike our future robot masters!</p>
 
 <p><img src="https://static.perrotin.com/vue/photo/9471_1.jpg?=20150729121805"></p>
 
