@@ -4,7 +4,7 @@
   <title><![CDATA[Blogj!]]></title>
   <link href="http://jayzee.github.io/atom.xml" rel="self"/>
   <link href="http://jayzee.github.io/"/>
-  <updated>2016-03-08T21:12:04-05:00</updated>
+  <updated>2016-03-08T21:37:00-05:00</updated>
   <id>http://jayzee.github.io/</id>
   <author>
     <name><![CDATA[Josh Zizmor]]></name>
@@ -41,7 +41,13 @@
 <p>So how does Rails 4 and above do this magic?
 <i>protect_from_forgery</i> is included by default in the application_controller.rb  when generating new applications.</p>
 
-<p>Rails leverages cryptographically random tokens. It places one in the hidden field, this is what we see, and it also places one in the user&rsquo;s session. Rails adds a hidden input field aka authenticity_token to every form. The token is sent along with the form submission to the application. The server compares the values that was attached to the form with the value that is associated with the user&rsquo;s session. If these don&rsquo;t match then the form is not accepted and the computer could burst into flames. For every server action a new token is generated and sent as part of the response that you receive, if this doesn&rsquo;t match the last one the server sent to you, your request gets aborted.</p>
+<p>Rails leverages cryptographically random tokens. It places one token in the hidden field, this is the long string of numbers that we see if we inspect the page. It also places one in the user&rsquo;s session. A user session is a piece of memory that maintains a small amount of data about the user. For example if a user put anything in their shopping cart this could potentially be in the session data.</p>
+
+<p>Every time the server has an action it generates and sends  a new token as part of it&rsquo;s response to the browser. When a user responds they resend this token back to the server. If this doesn&rsquo;t match the last one the server sent to you, your request gets aborted since it&rsquo;s likely malicious.</p>
+
+<p>This long string of numbers is secretly added as a hidden input field (aka authenticity_token) to every form.</p>
+
+<p>Rails 3 utilized cookies instead of the Rails session helper which left if vulnerable to CSRF attacks.</p>
 
 <p>GET requests do not have tokens since they don&rsquo;t create, alter or destroy&hellip;. just like our future robot masters!</p>
 
