@@ -3,11 +3,11 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>Too Many Screen Sizes - Blogj!</title>
+	<title>Pass Me The Ketchup (Secret Stories in Screen Sizes) - Blogj!</title>
 	<meta name="author" content="Josh Zizmor">
 
 	
-	<meta name="description" content="Web sites are being served to a large number of different screen sizes and devices types. How do you develop a site that looks as nice and pretty on &hellip;">
+	<meta name="description" content="Web sites are being served to a large number of different screen sizes and devices types. How do you design and develop a site that looks as nice and &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -74,12 +74,16 @@
 		
 	
 	<div id="content" class="inner"><article class="post">
-	<h2 class="title">Too Many Screen Sizes</h2>
-	<div class="entry-content"><p>Web sites are being served to a large number of different screen sizes and devices types. How do you develop a site that looks as nice and pretty on a tiny 4" phone as it doesn on a 25" monitor.</p>
+	<h2 class="title">Pass Me the Ketchup (Secret Stories in Screen Sizes)</h2>
+	<div class="entry-content"><p>Web sites are being served to a large number of different screen sizes and devices types. How do you design and develop a site that looks as nice and pretty on a tiny 4" phone as it doesn on a 25" monitor?</p>
 
-<p>Before I started coding I worked as a project manager shepherding digital sites and content from the idea phase through the design and development cycles. Over the last few years, as the amount of screen sizes and devices grew, I was guilty of throwing around terms like ‘device agnostic’ and &lsquo;mobile first&rsquo;. From a strategy perspective it’s very clear to me why responsive sites are needed and why a site would want to serve up specific content based on the device and screen size that the user has. What I never understood was how it was actually being implemented by developers.</p>
+<p>Before I started coding I worked as a project manager shepherding digital sites and content from the idea phase through the design and development cycles. Over the last few years, as the amount of screen sizes and devices grew, I used all kinds of buzzwords to get this point across to clients. Terms like ‘device agnostic' and &lsquo;mobile first&rsquo; were flagrantly used many times a day.</p>
 
-<p>While working on projects last week I started looking into and it looks like there are several different ways to approach responsive front end development. I’m going to tackle the basics of media query in CSS in this post. First off, let me define responsive web sites to make sure we are all on the same page.</p>
+<p>From a strategy perspective it’s very clear to me why responsive sites are needed and why a site would want to serve up specific content based on the device and screen size that the user has in their hand. What I never understood was how it was actually being implemented by the developers.</p>
+
+<p>I&rsquo;ve had a chance to take a look at how content is delivered, or not delivered based on screen size. It turns out there are several different ways to approach responsive front end development, this blog post will tackle the basics of media query in CSS.</p>
+
+<p>First off, let me define responsive web designs to make sure we are all on the same page.</p>
 
 <p><strong>Responsive web design:</strong></p>
 
@@ -87,9 +91,11 @@
 
 <p>A site designed with RWD adapts the layout to the viewing environment by using fluid, proportion-based grids,flexible images, and CSS3 media queries&hellip;&ldquo;</i></p>
 
+<p>An example:</p>
+
 <p><img src="http://www.joshzizmor.com/fi/clean_air_challenge.jpg"></p>
 
-<p>A mobile phone has much less real estate and may load slower due to bandwidth so on a phone you are going to want to focus on essential functionality and remove rich images that may supply a rich interactive experience but have limited use. Also a user on a phone may be more likely to search for locations or contact you so these should be optimized.</p>
+<p>A mobile phone has much less real estate and may load slower if it&rsquo;s on broadband. When designing for a phone you are going to want to focus on essential functionality and remove images that may supply a rich interactive experience but are unnecessary. Also a user on a phone may be more likely to search based on locations so a designer/developer should optimize for this.</p>
 
 <p>How do we build this? The answer is <strong>Media Queries</strong></p>
 
@@ -131,7 +137,7 @@
 
 <p>Media queries can be compared to IF and ELSE statement. If the query is found true, i.e. the browser is larger than 480px, then the CSS in the block is acted upon. If the query is false then do not act on the CSS in the block.</p>
 
-<p>What if there are more than one item that needs to be checked. For example, only use the CSS on tablets where the browser has a minimum width of 600px and maximum width of 800px. Here&rsquo;s how that would loko:</p>
+<p>What if there are more than one item that needs to be checked? For example, only use the CSS on tablets where the browser has a minimum width of 600px and maximum width of 800px. Here&rsquo;s how that would loko:</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -141,7 +147,7 @@
 </span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
 
 
-<p>If you&rsquo;d like the queries to work like and OR statement then use a comma to seperate your queries like below.</p>
+<p>If you&rsquo;d like the queries to work like and OR statement then use a comma to separate your queries like below.</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
