@@ -7,7 +7,7 @@
 	<meta name="author" content="Josh Zizmor">
 
 	
-	<meta name="description" content="What the hell is this? WTF? Rails is just generating a long string of letters and numbers and nobodies wondering what is going on?!? Are we being &hellip;">
+	<meta name="description" content="Web sites are being served to a large number of different screen sizes and devices types. How do you develop a site that looks as nice and pretty on &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -74,6 +74,120 @@
 		
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2016/03/21/media-queries-and-what-that-means/">
+		
+			Too Many Screen Sizes</a>
+	</h2>
+	<div class="entry-content">
+		<p>Web sites are being served to a large number of different screen sizes and devices types. How do you develop a site that looks as nice and pretty on a tiny 4" phone as it doesn on a 25" monitor.</p>
+
+<p>Before I started coding I worked as a project manager shepherding digital sites and content from the idea phase through the design and development cycles. Over the last few years, as the amount of screen sizes and devices grew, I was guilty of throwing around terms like ‘device agnostic’ and &lsquo;mobile first&rsquo;. From a strategy perspective it’s very clear to me why responsive sites are needed and why a site would want to serve up specific content based on the device and screen size that the user has. What I never understood was how it was actually being implemented by developers.</p>
+
+<p>While working on projects last week I started looking into and it looks like there are several different ways to approach responsive front end development. I’m going to tackle the basics of media query in CSS in this post. First off, let me define responsive web sites to make sure we are all on the same page.</p>
+
+<p><strong>Responsive web design:</strong></p>
+
+<p>From Wikipedia: <i>&ldquo;Responsive web design (RWD) is an approach to web design aimed at crafting sites to provide an optimal viewing and interaction experience—easy reading and navigation with a minimum of resizing, panning, and scrolling—across a wide range of devices (from desktop computer monitors to mobile phones)</p>
+
+<p>A site designed with RWD adapts the layout to the viewing environment by using fluid, proportion-based grids,flexible images, and CSS3 media queries&hellip;&ldquo;</i></p>
+
+<p><img src="http://www.joshzizmor.com/fi/clean_air_challenge.jpg"></p>
+
+<p>A mobile phone has much less real estate and may load slower due to bandwidth so on a phone you are going to want to focus on essential functionality and remove rich images that may supply a rich interactive experience but have limited use. Also a user on a phone may be more likely to search for locations or contact you so these should be optimized.</p>
+
+<p>How do we build this? The answer is <strong>Media Queries</strong></p>
+
+<p>Media Queries are used in CSS to grab information from the browser and make decisions based on what comes back. It can procure info like browser width and height, device width and height, orientation (portrait or tablet), and resolution.</p>
+
+<p>In your CSS file you can use a variable called @media to make decisions based on these parameters.</p>
+
+<p>Here&rsquo;s a basic template of how a media query should be set up in your CSS file:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>@media (query) {
+</span><span class='line'>  /* CSS Rules used when query matches */
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Here&rsquo;s a working example. This is saying, that the CSS below should only be used on browser smaller than 480px. The wrapper is then set to 400px and a background image called &lsquo;media-queries-phone.jpg&rsquo; is used. This image is probably proportionally correct for a phone.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>@media (max-device-width: 480px) {
+</span><span class='line'>    div#wrapper {
+</span><span class='line'>      width: 400px;
+</span><span class='line'>    }
+</span><span class='line'>
+</span><span class='line'>    div#header {
+</span><span class='line'>      background-image: url(media-queries-phone.jpg);
+</span><span class='line'>      
+</span><span class='line'>    }</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Media queries can be compared to IF and ELSE statement. If the query is found true, i.e. the browser is larger than 480px, then the CSS in the block is acted upon. If the query is false then do not act on the CSS in the block.</p>
+
+<p>What if there are more than one item that needs to be checked. For example, only use the CSS on tablets where the browser has a minimum width of 600px and maximum width of 800px. Here&rsquo;s how that would loko:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>@media (min-width: 600px) and (max-width: 800px) {
+</span><span class='line'>  html { background: red; }
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If you&rsquo;d like the queries to work like and OR statement then use a comma to seperate your queries like below.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>@media (max-width: 600px), (min-width: 800px) {
+</span><span class='line'>  html { background: red; }
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Take a look at the list of all the info that media queries have access to.</p>
+
+<p><img src="http://www.joshzizmor.com/fi/responsive_browser_info.png"></p>
+
+<p><br>
+Resources &amp; Further Readings:<br>
+<a href="http://www.w3schools.com/css/css_rwd_mediaqueries.asp">http://www.w3schools.com/css/css_rwd_mediaqueries.asp</a><br>
+<a href="https://www.smashingmagazine.com/2010/07/how-to-use-css3-media-queries-to-create-a-mobile-version-of-your-website/">https://www.smashingmagazine.com/2010/07/how-to-use-css3-media-queries-to-create-a-mobile-version-of-your-website/</a><br>
+<a href="https://developers.google.com/web/fundamentals/design-and-ui/responsive/fundamentals/use-media-queries?hl=en">https://developers.google.com/web/fundamentals/design-and-ui/responsive/fundamentals/use-media-queries?hl=en</a></p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+Mar 21st, 2016</div>
+	<div class="tags">
+
+</div>
+	
+</div>
+</article>
 
 
     <article class="post">
