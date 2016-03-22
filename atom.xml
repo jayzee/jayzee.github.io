@@ -4,7 +4,7 @@
   <title><![CDATA[Blogj!]]></title>
   <link href="http://jayzee.github.io/atom.xml" rel="self"/>
   <link href="http://jayzee.github.io/"/>
-  <updated>2016-03-22T09:20:37-04:00</updated>
+  <updated>2016-03-22T09:21:35-04:00</updated>
   <id>http://jayzee.github.io/</id>
   <author>
     <name><![CDATA[Josh Zizmor]]></name>
@@ -20,7 +20,7 @@
     <id>http://jayzee.github.io/blog/2016/03/21/media-queries-and-what-that-means</id>
     <content type="html"><![CDATA[<p>Web sites are being served to a large number of different screen sizes and devices types. How do you design and develop a site that looks as nice and pretty on a tiny 4" phone as it doesn on a 25" monitor?</p>
 
-<p><img src="http://ymstudios.com/wp-content/uploads/2014/06/responsive_design_screens.png"></p>
+<p><img src="http://ymstudios.com/wp-content/uploads/2014/06/responsive_design_screens.png" align="right"></p>
 
 <p>Before I started coding I worked as a project manager shepherding digital sites and content from the idea phase through the design and development cycles. Over the last few years, as the amount of screen sizes and devices grew, I used all kinds of buzzwords to get this point across to clients. Terms like ‘device agnostic' and &lsquo;mobile first&rsquo; were flagrantly used many times a day.</p>
 
