@@ -1,0 +1,200 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>OAuth is a knife wielding maniac that is trying to kill me - Blogj!</title>
+	<meta name="author" content="Josh Zizmor">
+
+	
+	<meta name="description" content="I spent most of last weekend trying to get Oauth to work with with a single page javascript application.
+I learned a lot about what oauth is, why it &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="Blogj!" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script async="true" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">Blogj!</a></h1>
+<nav id="main-nav"><ul class="main">
+	<li><a href="/">Blog</a></li>
+	<li><a href="/blog/archives">Archives</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main">
+	<li><a href="/">Blog</a></li>
+	<li><a href="/blog/archives">Archives</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="https://www.google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:jayzee.github.io">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		
+    
+		
+		
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+    
+	</div>
+	<form class="search" action="https://www.google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:jayzee.github.io">
+	</form>
+</nav>
+
+</header>
+	
+		
+	
+	<div id="content" class="inner"><article class="post">
+	<h2 class="title">OAuth Is a Knife Wielding Maniac That Is Trying to Kill Me</h2>
+	<div class="entry-content"><p>I spent most of last weekend trying to get Oauth to work with with a single page javascript application.
+I learned a lot about what oauth is, why it is &lsquo;potentially helpful&rsquo; and, most importantly, when not to use it.</p>
+
+<p>Oauth is required by a number of popular web platforms in order to interact with their API.
+For example, I was trying to use the twitter API which requires oauth authentication before
+Twitter will share or accept any information via API. Ruby makes it really simple to setup this
+authentication using a gem but since I had a single page javascript site I tried to do set up
+the authentication with an ajax call. This was a mistake which I will explain in more depth later.</p>
+
+<p><img src="https://hueniversedotcom.files.wordpress.com/2009/09/oauth-shine.png?w=600&h=598" width="250"  hspace="20" align="right"></p>
+
+<p><strong>What is OAuth?</strong><br>
+Let&rsquo;s take a step back and try to understand what Oauth is and why so many APIs demand it.
+Twitter says, &ldquo;OAuth is an authentication protocol that allows users to approve application
+to act on their behalf without sharing their password.&rdquo; OAuth creates a way for users to
+grant third-party access to their resources
+without the need to share their passwords. It also provides a way to grant access in a more limited way
+like duration and scope.</p>
+
+<p>Think of Oauth as a fancy way to authenticate with a server. It allows one service to gain access to a user&rsquo;s
+restricted content from another service without needing to receive the user&rsquo;s username or password
+from the original service. For example, what if you want catfinder.com to automatically post to your Twitter account
+every time a new cat shows up in your neighborhood. Catfinder will go through Twitter to
+ask you (the user) permission to be allowed to post to your twitter account.</p>
+
+<p>Today there are lots of different cloud services with various logins like Facebook, Gmail . Asking users to have unique
+password for every single service will actually reduce the level of security since people will
+just start using very simple password like 1,2,3,4 or the same password. It&rsquo;s simpler if a user
+can have a unique username and password with Twitter.</p>
+
+<p>Here&rsquo;s the basic interaction that a user sees:</p>
+
+<ol>
+<li>The user wants catfinder.com to automatically post to their twitter account. Catfinder says, let me go ask twitter.</li>
+<li>Catfinder reaches out to twitter to ask permission. Twitter gives out a request token and a secret (cryptic string). The secret is
+used by the user to verify they are coming from Catfinder.</li>
+<li>The user is redirected to the Twitter to approve Catfinder.</li>
+<li>The user gives permission to Twitter to let Catfinder post on the user's feed.</li>
+<li>Catfinder requests an access token from Twitter. Twitter responds with an access token.</li>
+<li>Catfinder posts to the users twitter.</li>
+</ol>
+
+
+<p>Here&rsquo;s the benefits, our hero (the user) never had to share their login credentials with Catfinder all he did was delegate access using Oauth. The user can login into Twitter and revoke permission from Catfinder any
+time he&rsquo;s no longer wants pictures of cats in his twitter feed.</p>
+
+<p><img src="http://community.hpe.com/t5/image/serverpage/image-id/27081i8E0E5881BA360900?v=lz-1"></p>
+
+<p><strong>Why did OAuth ruin my weekend?</strong><br>
+Twitter no longer allows user to request data without setting up oauth. This can
+be easily handled with a ruby gem or a wrapper if you are using node.js but if you are not using
+a backend and just writing vanilla javascritp it is extremely difficult. Why is it so difficult?
+The reason is that its very hard to make key and token strings hidden without a backend. A visitor to your
+site can find a way to see them.</p>
+
+<p>When you decide you want to access Twitter&rsquo;s API they will give you the following information
+that you will need to include as part of your API&rsquo;s authentication.</p>
+
+<p><ul><li>Consumer Key</li>
+<li>Consumer Secret</li>
+<li>Request Token URL</li>
+<li>Authorize URL</li>
+<li>Access Token URL</li></p>
+
+<p>Handing these off in the correct method and order can be difficult but are nicely abstracted out
+in a number of different gems, wrappers and packages. Twitter provides a list of libraries:
+<a href="https://dev.twitter.com/overview/api/twitter-libraries">https://dev.twitter.com/overview/api/twitter-libraries</a></p>
+
+<p><iframe width="560" height="315" src="https://www.youtube.com/embed/_JNGI1dI-e8" frameborder="0" allowfullscreen></iframe></p>
+
+<p><iframe width="420" height="315" src="https://www.youtube.com/embed/Dz2IrS6AlzA" frameborder="0" allowfullscreen></iframe></p>
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+Apr 4th, 2016</div>
+	<div class="tags">
+
+</div>
+	
+</div>
+</article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+		
+		
+		<a class="addthis_button_tweet"></a>
+		
+		
+		
+	</div>
+	
+</div>
+
+
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2016
+
+    Josh Zizmor
+
+</footer>
+	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+
+
+
+
+</body>
+</html>
