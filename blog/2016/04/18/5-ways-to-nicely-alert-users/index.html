@@ -1,0 +1,192 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>5 Ways to Nicely Alert Users in Javascript - Blogj!</title>
+	<meta name="author" content="Josh Zizmor">
+
+	
+	<meta name="description" content="While working on my latest project I came across SweetAlert for Bootstrap. Sweetalert is a simple to use
+alert tool in javascript. Instead of writing &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="Blogj!" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script async="true" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">Blogj!</a></h1>
+<nav id="main-nav"><ul class="main">
+	<li><a href="/">Blog</a></li>
+	<li><a href="/blog/archives">Archives</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main">
+	<li><a href="/">Blog</a></li>
+	<li><a href="/blog/archives">Archives</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="https://www.google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:jayzee.github.io">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		
+    
+		
+		
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+    
+	</div>
+	<form class="search" action="https://www.google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:jayzee.github.io">
+	</form>
+</nav>
+
+</header>
+	
+		
+	
+	<div id="content" class="inner"><article class="post">
+	<h2 class="title">5 Ways to Nicely Alert Users in Javascript</h2>
+	<div class="entry-content"><p>While working on my latest project I came across <a href="http://lipis.github.io/bootstrap-sweetalert/">SweetAlert for Bootstrap</a>. Sweetalert is a simple to use
+alert tool in javascript. Instead of writing &lsquo;alert&rsquo; and get the browser&rsquo;s standard messaging Sweetalert creates a nicely styled alert box that even has the options for
+several nice success and alert graphics.</p>
+
+<p>Here&rsquo;s how to use it. Just add the following to your javascript.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>swal("Here's a message!")</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This would produce this message:</p>
+
+<p><img src="http://joshzizmor.com/fi/sweetalert-basic.png" width=400></p>
+
+<p>Sweetalert also has easy to create success confirmation.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>swal("Good job!", "You clicked the button!", "success")</span></code></pre></td></tr></table></div></figure>
+
+
+<p><img src="http://joshzizmor.com/fi/sweetalert-success.png" width=400></p>
+
+<p>There&rsquo;s also option for a confirmation alert box:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>swal({
+</span><span class='line'>  title: "Are you sure?",
+</span><span class='line'>  text: "Your will not be able to recover this imaginary file!",
+</span><span class='line'>  type: "warning",
+</span><span class='line'>  showCancelButton: true,
+</span><span class='line'>  confirmButtonClass: "btn-danger",
+</span><span class='line'>  confirmButtonText: "Yes, delete it!",
+</span><span class='line'>  closeOnConfirm: false
+</span><span class='line'>},
+</span><span class='line'>function(){
+</span><span class='line'>  swal("Deleted!", "Your imaginary file has been deleted.", "success");
+</span><span class='line'>});</span></code></pre></td></tr></table></div></figure>
+
+
+<p><img src="http://joshzizmor.com/fi/sweetalert-confirmation-needed.png" width=400></p>
+
+<p>Sweetalert is simple and easy to use but their are other alert tools in javascript that may be helpful for your next projects. Here are a few more:</p>
+
+<ul><li><a href="https://github.com/akquinet/jquery-toastmessage-plugin">jQuery Toastmessage</a> - This JQuery plugin  provides android-like notification messages. The toasted messages arrive on the screen in a seamless and natural way.</li>
+
+<li><a href="http://www.greepit.com/notify/">Notify</a> - jQuery plugin which adds simple notifications bars that you can use on your website and application to assist users while they fill in forms, navigate through pages or interact with interface.</li>
+
+<li><a href="http://danielraftery.com/read/Sticky-A-super-simple-notification-system-for-jQuery">Sticky</a> - A super simple notification system for jQuery</li>
+
+
+</li></ul>
+
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+Apr 18th, 2016</div>
+	<div class="tags">
+
+</div>
+	
+</div>
+</article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+		
+		
+		<a class="addthis_button_tweet"></a>
+		
+		
+		
+	</div>
+	
+</div>
+
+
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2016
+
+    Josh Zizmor
+
+</footer>
+	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+
+
+
+
+</body>
+</html>

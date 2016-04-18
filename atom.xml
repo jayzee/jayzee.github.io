@@ -4,7 +4,7 @@
   <title><![CDATA[Blogj!]]></title>
   <link href="http://jayzee.github.io/atom.xml" rel="self"/>
   <link href="http://jayzee.github.io/"/>
-  <updated>2016-04-05T09:24:27-04:00</updated>
+  <updated>2016-04-18T17:09:53-04:00</updated>
   <id>http://jayzee.github.io/</id>
   <author>
     <name><![CDATA[Josh Zizmor]]></name>
@@ -12,6 +12,77 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[5 Ways to Nicely Alert Users in Javascript]]></title>
+    <link href="http://jayzee.github.io/blog/2016/04/18/5-ways-to-nicely-alert-users/"/>
+    <updated>2016-04-18T15:51:42-04:00</updated>
+    <id>http://jayzee.github.io/blog/2016/04/18/5-ways-to-nicely-alert-users</id>
+    <content type="html"><![CDATA[<p>While working on my latest project I came across <a href="http://lipis.github.io/bootstrap-sweetalert/">SweetAlert for Bootstrap</a>. Sweetalert is a simple to use
+alert tool in javascript. Instead of writing &lsquo;alert&rsquo; and get the browser&rsquo;s standard messaging Sweetalert creates a nicely styled alert box that even has the options for
+several nice success and alert graphics.</p>
+
+<p>Here&rsquo;s how to use it. Just add the following to your javascript.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>swal("Here's a message!")</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This would produce this message:</p>
+
+<p><img src="http://joshzizmor.com/fi/sweetalert-basic.png" width=400></p>
+
+<p>Sweetalert also has easy to create success confirmation.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>swal("Good job!", "You clicked the button!", "success")</span></code></pre></td></tr></table></div></figure>
+
+
+<p><img src="http://joshzizmor.com/fi/sweetalert-success.png" width=400></p>
+
+<p>There&rsquo;s also option for a confirmation alert box:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>swal({
+</span><span class='line'>  title: "Are you sure?",
+</span><span class='line'>  text: "Your will not be able to recover this imaginary file!",
+</span><span class='line'>  type: "warning",
+</span><span class='line'>  showCancelButton: true,
+</span><span class='line'>  confirmButtonClass: "btn-danger",
+</span><span class='line'>  confirmButtonText: "Yes, delete it!",
+</span><span class='line'>  closeOnConfirm: false
+</span><span class='line'>},
+</span><span class='line'>function(){
+</span><span class='line'>  swal("Deleted!", "Your imaginary file has been deleted.", "success");
+</span><span class='line'>});</span></code></pre></td></tr></table></div></figure>
+
+
+<p><img src="http://joshzizmor.com/fi/sweetalert-confirmation-needed.png" width=400></p>
+
+<p>Sweetalert is simple and easy to use but their are other alert tools in javascript that may be helpful for your next projects. Here are a few more:</p>
+
+<ul><li><a href="https://github.com/akquinet/jquery-toastmessage-plugin">jQuery Toastmessage</a> - This JQuery plugin  provides android-like notification messages. The toasted messages arrive on the screen in a seamless and natural way.</li>
+
+<li><a href="http://www.greepit.com/notify/">Notify</a> - jQuery plugin which adds simple notifications bars that you can use on your website and application to assist users while they fill in forms, navigate through pages or interact with interface.</li>
+
+<li><a href="http://danielraftery.com/read/Sticky-A-super-simple-notification-system-for-jQuery">Sticky</a> - A super simple notification system for jQuery</li>
+
+
+</li></ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[OAuth is a knife wielding maniac that is trying to kill me]]></title>
