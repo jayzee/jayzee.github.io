@@ -4,7 +4,7 @@
   <title><![CDATA[Blogj!]]></title>
   <link href="http://jayzee.github.io/atom.xml" rel="self"/>
   <link href="http://jayzee.github.io/"/>
-  <updated>2016-04-18T17:09:53-04:00</updated>
+  <updated>2016-06-09T20:35:43-04:00</updated>
   <id>http://jayzee.github.io/</id>
   <author>
     <name><![CDATA[Josh Zizmor]]></name>
@@ -12,6 +12,42 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Making Date.parse() Work on Safari]]></title>
+    <link href="http://jayzee.github.io/blog/2016/06/09/making-date-dot-parse-work-on-safari/"/>
+    <updated>2016-06-09T16:10:38-04:00</updated>
+    <id>http://jayzee.github.io/blog/2016/06/09/making-date-dot-parse-work-on-safari</id>
+    <content type="html"><![CDATA[<p>I recently finished a project where I needed to figure out how long ago a blog post was submitted. I was using javascript and had the date that the post was submitted as a string that looked like this:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>var datePublished = "2016-05-09 11:03:00"</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In order to be able to make calculation the first thing I did was changed the datePublished variable from a string into milliseconds. Date.parse returns the number of milliseconds since January 1, 1970. Initially this seemed straightforward. I used Date.parse like this:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Date.parse(datePublished)</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Once I had the millisecond value I could find the difference between that number and the millisecond value of the current time. This was working great when I checked out the site on Chrome BUT when I went to look at the site in Safari I saw a big <strong>NaN</strong> where the time difference should be.</p>
+
+<p>It turns out that Safari does not support Date.parse(). What should I do?</p>
+
+<p>I searched around the web and found a cool javascript library called <a href="momentjs.com">Moment.js</a>. Moment.js lets you parse, manipulate and display dates. It turns strings with date information into moment object which you can then act on. I created a moment object by doing this &lsquo;moment(publishedDate)&rsquo;. Once I had the date as a moment object I could turn it into millisecond by calling a valueOf() method that is part of moment.js library.</p>
+
+<p>Here&rsquo;s the code:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>var datePublished = "2016-05-09 11:03:00"
+</span><span class='line'>publishedTime = moment(publishDate).valueOf();
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>publishedTime now has the milliseconds of the date since January 1, 1970! It&rsquo;s a number that I can subtract from other numbers to find the time difference. Problem solved. Amazing.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[5 Ways to Nicely Alert Users in Javascript]]></title>
